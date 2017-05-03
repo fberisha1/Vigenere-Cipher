@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace BreakVigenere
 {
@@ -16,7 +17,81 @@ namespace BreakVigenere
 		{
 			InitializeComponent();
 		}
-		static Dictionary<char, double> AnalizoFrekuencen(string teksti)
+        static bool kontrolloQelesin;
+        static bool KontrolloQelesin(String qelesi)
+        {
+            kontrolloQelesin = Regex.IsMatch(qelesi, @"^[a-zA-Z]+$");
+            return kontrolloQelesin;
+        }
+        private int alfabeti = 26;
+        private string Qelesi;
+        private void btnDekripto_Click(object sender, EventArgs e)
+        {
+            Qelesi = txtcelesi.Text.Trim().ToUpper();
+
+            if (txtcelesi.Text.Trim() != "")
+            {
+                if (KontrolloQelesin(Qelesi))
+                {
+                    Form1 f1 = new Form1();
+
+                    StringBuilder Plain = new StringBuilder(txtCipher.Text.ToString());
+
+                    for (int i = 0, j = 0; i < txtCipher.Text.Length; i++)
+                    {
+                        if (txtCipher.Text[i] != ' ' && txtCipher.Text[i] >= 'A' && txtCipher.Text[i] <= 'Z')
+                        {
+                            Plain[i] = (char)((txtCipher.Text[i] - Qelesi[j] + alfabeti) % alfabeti + 'A');
+                            j = ++j % Qelesi.Length;
+                        }
+                        else if (txtCipher.Text[i] != ' ' && txtCipher.Text[i] >= 'a' && txtCipher.Text[i] <= 'z')
+                        {
+                            Plain[i] = (char)((txtCipher.Text[i] - (Qelesi[j] + ('a' - 'A')) + alfabeti) % alfabeti + 'a');
+                            j = ++j % Qelesi.Length;
+                        }
+                        else
+                        {
+                            Plain[i] = txtCipher.Text[i];
+                        }
+                    }
+                    txtPlain.Text = Plain.ToString();
+
+                }
+                else
+                {
+                    MessageBox.Show("Jane te lejuara vetem shkronjat A-Z dhe a-z", "Gabim ne qeles");
+                    txtcelesi.Focus();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ju lutem mbusheni fushen e qelesit", "Gabim ne qeles");
+                txtcelesi.Focus();
+            }
+        }
+        static List<string> NdajeTekstinMeGjatesiTeQelesit(string teksti, int gjatesiaQelesit)
+        {
+            List<string> rezultati = new List<string>();
+            StringBuilder[] sb = new StringBuilder[gjatesiaQelesit];
+
+            for (int i = 0; i < gjatesiaQelesit; i++)
+            {
+                sb[i] = new StringBuilder();
+            }
+
+            for (int i = 0; i < teksti.Length; i++)
+            {
+                sb[i % gjatesiaQelesit].Append(teksti[i]);
+            }
+
+            foreach (var item in sb)
+            {
+                rezultati.Add(item.ToString());
+            }
+
+            return rezultati;
+        }
+        static Dictionary<char, double> AnalizoFrekuencen(string teksti)
 		{
 			if (teksti == null)
 			{
