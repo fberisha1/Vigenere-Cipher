@@ -1,1 +1,2 @@
 C:\Users\Fisniku\Documents\Visual Studio 2015\Projects\Vigenère\Vigenere\BreakVigenere\bin\Debug\BreakVigenere.exe.config
+C:\Users\PC\Documents\GitHub\Vigenere-Cipher\BreakVigenere\bin\Debug\BreakVigenere.exe.config

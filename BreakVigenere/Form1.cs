@@ -217,5 +217,93 @@ namespace BreakVigenere
 					}
 				}
 			}
-		}
+            int x;
+            string q;
+            int f = MostFreq(NumratPerseritur, out x);
+            q = GjejQelesin(x);
+
+            int Gjatesia2 = NumratPerseritur.Length;
+
+            int[] GjatesiaDyte = new int[0];
+
+            for (int i = 0; i < Gjatesia2; i++)
+            {
+                if (NumratPerseritur[i] != x)
+                {
+                    Array.Resize(ref GjatesiaDyte, GjatesiaDyte.Length + 1);
+                    GjatesiaDyte[GjatesiaDyte.Length - 1] = NumratPerseritur[i];
+                }
+            }
+
+            int y;
+            string t;
+            int g = MostFreq(GjatesiaDyte, out y);
+            t = GjejQelesin(y);
+            int Gjatesia3 = GjatesiaDyte.Length;
+            int[] GjatesiaTrete = new int[0];
+
+            for (int i = 0; i < Gjatesia3; i++)
+            {
+                if (GjatesiaDyte[i] != y)
+                {
+                    Array.Resize(ref GjatesiaTrete, GjatesiaTrete.Length + 1);
+                    GjatesiaTrete[GjatesiaTrete.Length - 1] = GjatesiaDyte[i];
+                }
+            }
+
+            int z;
+            string u;
+            int h = MostFreq(GjatesiaTrete, out z);
+            u = GjejQelesin(z);
+            int Gjatesia4 = GjatesiaTrete.Length;
+            int[] GjatesiaKatert = new int[0];
+
+            for (int i = 0; i < Gjatesia4; i++)
+            {
+                if (GjatesiaTrete[i] != z)
+                {
+                    Array.Resize(ref GjatesiaKatert, GjatesiaKatert.Length + 1);
+                    GjatesiaKatert[GjatesiaKatert.Length - 1] = GjatesiaTrete[i];
+                }
+            }
+
+            int w;
+            string p;
+            int k = MostFreq(GjatesiaKatert, out w);
+            p = GjejQelesin(w);
+            lblCelsi1.Text = "\t Çelesi me gjatesi:" + x + " është: " + q +
+                "\n\t Çelesi me gjatesi:" + y + "  është:" + t + "\r\n\t Çelesi me gjatesi:" + z + " është:" +
+                u + "\r\n\t Çelesi me gjatesi:" + w + "  është: " + p;
+        }
+        public static int MostFreq(int[] _M, out int x)
+        {
+
+            int Max_Freq, No_Freq, i, k;
+            Array.Sort(_M);
+            k = _M[0];
+            Max_Freq = 0; i = 0; x = 0;
+            while (i < _M.Length)
+            {
+                No_Freq = 0;
+
+                while (k == _M[i])
+                {
+                    No_Freq++;
+                    i++;
+                    if (i == _M.Length)
+                        break;
+                }
+                if (No_Freq > Max_Freq)
+                {
+                    Max_Freq = No_Freq;
+                    x = k;
+                }
+                if (i < _M.Length) k = _M[i];
+            }
+            return (Max_Freq);
+        }
+    }
 }
+
+
+
